@@ -1,4 +1,5 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import React from 'react';
 //import ryuKen from '../gifs/testeImagem.jpg';
 import appConfig from '../config.json';
 //import {ReactComponent as ryuKen} from '../gifs/testeImagem.jpg';
@@ -65,7 +66,10 @@ function Titulo(props) {
 // export default HomePage
 
 export default function PaginaInicial() {
-    const username = 'micaeltrivelato';
+    //const username = 'copyright © 2022';
+
+    const [username, setUserName] = React.useState('');
+    const gifAnimado = 'https://i.gifer.com/Z3zH.gif';
 
     return (
         <>
@@ -73,7 +77,7 @@ export default function PaginaInicial() {
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                   // backgroundColor: appConfig.theme.colors.primary[100],
+                    // backgroundColor: appConfig.theme.colors.primary[100],
                     backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/11/street-fighter-ii-ryus-stage.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
@@ -103,84 +107,122 @@ export default function PaginaInicial() {
                         }}
                     >
                         <Titulo tag="h2">Bem-vindo ao GameChat!</Titulo>
-                        <Text variant="body3" styleSheet={{ marginBottom: '32px', marginTop:'5px', color: appConfig.theme.colors.neutrals[800] }}>
+                        <Text variant="body3" styleSheet={{ marginBottom: '32px', marginTop: '5px', color: appConfig.theme.colors.neutrals[800] }}>
                             O seu canal de chat para jogos!
                         </Text>
-
-                        <TextField
+                        <input
+                            type="text"
+                            value={[username]}
+                            onChange={function Handler(eventUser) {
+                                {
+                                    console.log('usuario digitou')
+                                    const valorUser = eventUser.target.value
+                                    setUserName(valorUser);
+                                }
+                            }}
+                        />
+                        {/*<TextField
                             fullWidth
                             textFieldColors={{
                                 neutral: {
-                                    textColor: appConfig.theme.colors.neutrals[1000],
-                                    mainColor: appConfig.theme.colors.neutrals[1000],
-                                    mainColorHighlight: appConfig.theme.colors.neutrals[1001],
-                                    backgroundColor: appConfig.theme.colors.neutrals[1002],
+                                    textColor: appConfig.theme.colors.personalized[1000],
+                                    mainColor: appConfig.theme.colors.personalized[1000],
+                                    mainColorHighlight: appConfig.theme.colors.personalized[1001],
+                                    backgroundColor: appConfig.theme.colors.personalized[1002],
                                 },
                             }}
-                        />
+                        />*/}
                         <Button
                             type='submit'
                             label='Entrar'
                             fullWidth
                             textColor={{
-                                color: appConfig.theme.colors.neutrals[1000],
+                                color: appConfig.theme.colors.personalized[1000],
                             }}
                             buttonColors={{
                                 contrastColor: appConfig.theme.colors.neutrals["999"],
-                                mainColor: appConfig.theme.colors.neutrals[1001],
-                                mainColorLight: appConfig.theme.colors.neutrals[1000],
-                                mainColorStrong: appConfig.theme.colors.neutrals[1000],
+                                mainColor: appConfig.theme.colors.personalized[1001],
+                                mainColorLight: appConfig.theme.colors.personalized[1000],
+                                mainColorStrong: appConfig.theme.colors.personalized[1000],
                             }}
-                        >                       
+                        >
                         </Button>
-                        
+
                     </Box>
                     {/* Formulário */}
 
 
                     {/* Photo Area */}
-                    <Box
-                        styleSheet={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            maxWidth: '200px',
-                            padding: '16px',
-                            backgroundColor: "linear-gradient(#fbff00, #e62e09);",
-                            border: '1px solid',
-                            borderColor: appConfig.theme.colors.neutrals[999],
-                            borderRadius: '30px',
-                            flex: 1,
-                            minHeight: '240px',
-                        }}
-                    >
-                        <Image
+                    {username == "" || username == null
+                        ? <Box
                             styleSheet={{
-                                borderRadius: '50%',
-                                marginBottom: '16px',
-                            }}
-                            src={`https://github.com/${username}.png`}
-                        />
-                        <Text
-                            variant="body4"
-                            styleSheet={{
-                                color: appConfig.theme.colors.neutrals[200],
-                                backgroundColor: appConfig.theme.colors.neutrals[900],
-                                padding: '3px 10px',
-                                borderRadius: '1000px'
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                maxWidth: '300px',
+                                padding: '16px',
+                                backgroundColor: "linear-gradient(#fbff00, #e62e09);",
+                                border: '1px solid',
+                                borderColor: appConfig.theme.colors.neutrals[1000],
+                                borderRadius: '30px',
+                                flex: 1,
+                                minHeight: '240px',
                             }}
                         >
-                            {username}
-                        </Text>
-                    </Box>
+                            <Image
+                                styleSheet={{
+                                    borderRadius: '10%',
+                                    marginBottom: '16px',
+                                }}
+                                src={gifAnimado}
+                            />
+                        </Box>
+                        : <Box
+                            styleSheet={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                maxWidth: '300px',
+                                padding: '16px',
+                                backgroundColor: "linear-gradient(#fbff00, #e62e09);",
+                                border: '1px solid',
+                                borderColor: appConfig.theme.colors.neutrals[1000],
+                                borderRadius: '30px',
+                                flex: 1,
+                                minHeight: '240px',
+                            }}
+                        >
+                            <Image
+                                styleSheet={{
+                                    borderRadius: '10%',
+                                    marginBottom: '16px',
+                                }}
+                                src={`https://github.com/${username}.png`}
+                            />
+                            <Text
+                                variant="body4"
+                                styleSheet={{
+                                    color: appConfig.theme.colors.neutrals[1000],
+                                    backgroundColor: appConfig.theme.colors.neutrals[1001],
+                                    padding: '3px 10px',
+                                    borderRadius: '1000px',
+                                    fontFamily: 'Courier New',
+                                    width: '150px',
+                                    textAlign: 'center'
+                                }}
+                            >
+
+                                {username}
+                            </Text>
+                        </Box>}
                     {/* Photo Area */}
                 </Box>
                 <Image
-                            styleSheet={{
-                                marginBottom: '16px',
-                            }}
-                            src='https://i.gifer.com/Z3zH.gif'
-                        />
+                    styleSheet={{
+                        marginBottom: '16px',
+                    }}
+                //src='https://i.gifer.com/Z3zH.gif'
+                />
             </Box>
         </>
     );
