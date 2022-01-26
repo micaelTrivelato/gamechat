@@ -1,38 +1,10 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React from 'react';
+import { useRouter } from 'next/router'
 //import ryuKen from '../gifs/testeImagem.jpg';
 import appConfig from '../config.json';
 //import {ReactComponent as ryuKen} from '../gifs/testeImagem.jpg';
 import ryuKen from '../gifs/RYU_KEN.gif'
-
-function GlobalStyle() {
-    return (
-        <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */ 
-      html, body, #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */ 
-    `}</style>
-    );
-}
 
 function Titulo(props) {
     const Tag = props.tag || 'h1';
@@ -70,10 +42,9 @@ export default function PaginaInicial() {
 
     const [username, setUserName] = React.useState('');
     const gifAnimado = 'https://i.gifer.com/Z3zH.gif';
-
+    const roteamento = useRouter();
     return (
-        <>
-            <GlobalStyle />
+        <>       
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -101,6 +72,10 @@ export default function PaginaInicial() {
                     {/* Formulário */}
                     <Box
                         as="form"
+                        onSubmit={function(infosDoEvento){
+                            infosDoEvento.preventDefault();
+                            roteamento.push('/chat');
+                        }}
                         styleSheet={{
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -110,33 +85,31 @@ export default function PaginaInicial() {
                         <Text variant="body3" styleSheet={{ marginBottom: '32px', marginTop: '5px', color: appConfig.theme.colors.neutrals[800] }}>
                             O seu canal de chat para jogos!
                         </Text>
-                        <input
-                            type="text"
+                        <TextField
                             value={[username]}
+                            fullWidth
                             onChange={function Handler(eventUser) {
                                 {
                                     console.log('usuario digitou')
                                     const valorUser = eventUser.target.value
                                     setUserName(valorUser);
+
                                 }
                             }}
-                        />
-                        {/*<TextField
-                            fullWidth
                             textFieldColors={{
                                 neutral: {
-                                    textColor: appConfig.theme.colors.personalized[1000],
+                                    textcolor: appConfig.theme.colors.personalized[1000],
                                     mainColor: appConfig.theme.colors.personalized[1000],
                                     mainColorHighlight: appConfig.theme.colors.personalized[1001],
                                     backgroundColor: appConfig.theme.colors.personalized[1002],
                                 },
                             }}
-                        />*/}
+                        />
                         <Button
                             type='submit'
                             label='Entrar'
                             fullWidth
-                            textColor={{
+                            textcolor={{
                                 color: appConfig.theme.colors.personalized[1000],
                             }}
                             buttonColors={{
@@ -153,7 +126,7 @@ export default function PaginaInicial() {
 
 
                     {/* Photo Area */}
-                    {username == "" || username == null
+                    {username.length <= 2 
                         ? <Box
                             styleSheet={{
                                 display: 'flex',
@@ -202,8 +175,8 @@ export default function PaginaInicial() {
                             <Text
                                 variant="body4"
                                 styleSheet={{
-                                    color: appConfig.theme.colors.neutrals[1000],
-                                    backgroundColor: appConfig.theme.colors.neutrals[1001],
+                                    color: appConfig.theme.colors.personalized[1000],
+                                    backgroundColor: appConfig.theme.colors.personalized[1001],
                                     padding: '3px 10px',
                                     borderRadius: '1000px',
                                     fontFamily: 'Courier New',
@@ -211,8 +184,7 @@ export default function PaginaInicial() {
                                     textAlign: 'center'
                                 }}
                             >
-
-                                {username}
+                                <a href={`https://github.com/${username}`}>{username}</a>
                             </Text>
                         </Box>}
                     {/* Photo Area */}
